@@ -2,14 +2,10 @@ import { useRef, useState } from "react";
 import "./index.css";
 
 const arr = [
-  { taskName: "Buy groceries", completed: false },
-  { taskName: "Walk the dog", completed: true },
-  { taskName: "Read a book", completed: false },
-  { taskName: "Write some code", completed: true },
-  { taskName: "Exercise", completed: false },
-  { taskName: "Exercise", completed: false },
-  { taskName: "Exercise", completed: false },
-  { taskName: "Exercise", completed: false },
+  { taskName: "Buy groceries", completed: false, id: 101888, priority: 1 },
+  { taskName: "Walk the dog", completed: true, id: 102888, priority: 3 },
+  { taskName: "Read a book", completed: false, id: 103888, priority: 2 },
+  { taskName: "Write some code", completed: true, id: 104888, priority: 1 },
 ];
 
 function App() {
@@ -19,12 +15,16 @@ function App() {
     setTasks((t) => [...t, task]);
   }
 
+  function handleDeleteTask(taskId) {
+    setTasks((tasks) => tasks.filter((task) => task.id !== taskId));
+  }
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-300">
       <MainContainer>
         <Header />
         <ListContainer>
-          <List todoItems={tasks} />
+          <List todoItems={tasks} onDeleteTask={handleDeleteTask} />
         </ListContainer>
         <AddTask onAddTask={handleAddTask} />
       </MainContainer>
@@ -49,18 +49,34 @@ function Header() {
 }
 
 function ListContainer({ children }) {
-  return <div className="flex w-full flex-col overflow-y-auto">{children}</div>;
-}
-
-function List({ todoItems }) {
-  return todoItems.length > 0 ? (
-    todoItems.map((item, i) => <TodoItem taskName={item.taskName} index={i} />)
-  ) : (
-    <p className="text-bold text-center">No items</p>
+  return (
+    <div className="flex w-full flex-1 flex-col overflow-y-auto">
+      {children}
+    </div>
   );
 }
 
-function TodoItem({ taskName, index }) {
+function List({ todoItems, onDeleteTask }) {
+  return todoItems.length > 0 ? (
+    todoItems.map((item, i) => (
+      <TodoItem
+        taskName={item.taskName}
+        index={i}
+        id={item.id}
+        priority={item.priority}
+        onDeleteTask={onDeleteTask}
+      />
+    ))
+  ) : (
+    <div className="h-full flex-1 content-center">
+      <p className="text-bold text-center text-2xl">
+        No items in your list yet 😁
+      </p>
+    </div>
+  );
+}
+
+function TodoItem({ taskName, id, priority, index, onDeleteTask }) {
   return (
     <div
       className={`shadow-list-item flex max-w-full items-center justify-between bg-white px-2 py-4 starting:-translate-x-full`}
@@ -68,7 +84,18 @@ function TodoItem({ taskName, index }) {
         transitionDuration: `${index <= 8 ? (index + 1) * 200 + "ms" : "1500ms"}`,
       }}
     >
-      {taskName}
+      <p className="font-medium">
+        {priority === 1 && "🔴"}
+        {priority === 2 && "🟡"}
+        {priority === 3 && "🟢"}
+        {taskName}
+      </p>
+      <button
+        onClick={() => onDeleteTask(id)}
+        className="cursor-pointer p-2 text-2xl font-bold text-red-800"
+      >
+        &times;
+      </button>
     </div>
   );
 }
@@ -81,10 +108,12 @@ function AddTask({ onAddTask }) {
   function handleTask() {
     setIsSearching((s) => !s);
     if (inputField.current.value === "") return;
-    const taskName = inputField.current.value;
-    const priority = selectedPriority;
 
-    onAddTask({ taskName, priority });
+    const taskName = inputField.current.value;
+    const priority = +selectedPriority;
+    const id = Math.trunc(Math.random() * 900000) + 100000;
+
+    onAddTask({ taskName, priority, id });
   }
 
   function handlePriority(e) {
@@ -108,9 +137,9 @@ function AddTask({ onAddTask }) {
             value={selectedPriority}
             onChange={handlePriority}
           >
-            <option value="1">1: High Priority</option>
-            <option value="2">2: Medium Priority</option>
-            <option value="3">3: Low Priority</option>
+            <option value="1">🔴 High Priority</option>
+            <option value="2">🟡 Medium Priority</option>
+            <option value="3">🟢 Low Priority</option>
           </select>
         </>
       ) : (
