@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import "./index.css";
+import { useKeydown } from "./useKeydown";
 
 function App() {
   const [tasks, setTasks] = useLocalStorage("tasks");
@@ -14,7 +15,7 @@ function App() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center max-sm:min-h-auto">
+    <div className="flex min-h-[100dvh] items-center justify-center max-sm:min-h-auto">
       <MainContainer>
         <Header />
         <ListContainer>
@@ -28,7 +29,7 @@ function App() {
 
 function MainContainer({ children }) {
   return (
-    <div className="flex h-[42rem] max-h-screen max-sm:h-[100dvh] w-2xl flex-col items-center bg-slate-500 shadow-sm">
+    <div className="flex h-[42rem] max-h-screen w-2xl flex-col items-center bg-stone-800 shadow-2xl max-sm:h-[100dvh]">
       {children}
     </div>
   );
@@ -36,7 +37,7 @@ function MainContainer({ children }) {
 
 function Header() {
   return (
-    <h1 className="text-md font-century w-full bg-slate-800 py-4 text-center font-bold text-white">
+    <h1 className="text-md font-century w-full bg-rose-950 py-4 text-center font-bold text-white">
       ToDo List Vite/Tailwind 📝
     </h1>
   );
@@ -44,7 +45,7 @@ function Header() {
 
 function ListContainer({ children }) {
   return (
-    <div className="flex w-full flex-1 flex-col overflow-y-auto">
+    <div className="flex w-full flex-1 flex-col gap-2 overflow-y-auto p-4">
       {children}
     </div>
   );
@@ -82,7 +83,7 @@ function TodoItem({ taskName, id, priority, index, arr, onDeleteTask }) {
       }}
     >
       <div className="flex w-full origin-top items-center justify-between px-2 py-4 duration-200 ease-linear hover:text-lg max-sm:py-px max-sm:text-sm max-sm:hover:text-[1rem]">
-        <p className="font-medium">
+        <p className="text-justify font-medium">
           {priority === 1 && "🔴"}
           {priority === 2 && "🟡"}
           {priority === 3 && "🟢"}
@@ -104,11 +105,24 @@ function AddTask({ onAddTask }) {
   const [isSearching, setIsSearching] = useState(false);
   const [selectedPriority, setSelectedPriority] = useState(2);
 
+  useKeydown("Escape", () => {
+    setIsSearching(false);
+  });
+
+  useKeydown("Enter", () => {
+    handleAddTask();
+    inputField.current.value = "";
+  });
+
   function handleTask() {
     setIsSearching((s) => !s);
     if (!isSearching) return;
     if (inputField.current.value.trim() === "") return;
 
+    handleAddTask();
+  }
+
+  function handleAddTask() {
     const taskName = inputField.current.value;
     const priority = +selectedPriority;
     const id = Math.trunc(Math.random() * 900000) + 100000;
@@ -121,13 +135,13 @@ function AddTask({ onAddTask }) {
   }
 
   return (
-    <div className="mt-auto flex min-h-20 w-full items-center justify-center gap-4 bg-slate-200 px-4 py-2 max-sm:min-h-12 max-sm:flex-col max-sm:gap-2 max-sm:px-px">
+    <div className="shadow-up z-1 mt-auto flex min-h-20 w-full items-center justify-center gap-4 bg-white px-4 py-2 max-sm:min-h-12 max-sm:flex-col max-sm:gap-2 max-sm:px-px max-sm:py-4">
       {isSearching ? (
-        <div className="flex flex-1">
+        <div className="flex w-[95%] flex-1">
           <input
             type="text"
             placeholder="Add new task..."
-            className="flex-1 origin-right border-b px-4 outline-0 delay-250 duration-500 max-sm:px-2 max-sm:text-sm starting:scale-x-0"
+            className="flex-1 origin-right rounded-md border border-slate-600 px-4 py-2 outline-0 delay-250 duration-500 max-sm:px-2 max-sm:text-sm starting:scale-x-0"
             ref={inputField}
           />
           <select
