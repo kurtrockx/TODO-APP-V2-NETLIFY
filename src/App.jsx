@@ -87,7 +87,7 @@ function TodoItem({ taskName, id, priority, index, arr, onDeleteTask }) {
         zIndex: arr.length - index,
       }}
     >
-      <div className="flex w-full origin-top items-center justify-between px-2 py-4 max-sm:py-px max-sm:text-sm duration-200 ease-linear hover:text-lg max-sm:hover:text-md">
+      <div className="max-sm:hover:text-[1rem] flex w-full origin-top items-center justify-between px-2 py-4 duration-200 ease-linear hover:text-lg max-sm:py-px max-sm:text-sm">
         <p className="font-medium">
           {priority === 1 && "🔴"}
           {priority === 2 && "🟡"}
@@ -127,19 +127,19 @@ function AddTask({ onAddTask }) {
   }
 
   return (
-    <div className="mt-auto flex min-h-20 w-full items-center justify-center gap-4 bg-slate-200 px-4 py-2 max-sm:flex-col max-sm:gap-2">
+    <div className="mt-auto flex min-h-20 w-full items-center justify-center gap-4 bg-slate-200 px-4 py-2 max-sm:min-h-12 max-sm:flex-col max-sm:gap-2">
       {isSearching ? (
         <div className="flex flex-1">
           <input
             type="text"
             placeholder="Add new task..."
-            className="flex-1 origin-right border-b px-4 outline-0 delay-250 duration-500 starting:scale-x-0"
+            className="flex-1 origin-right border-b px-4 outline-0 delay-250 duration-500 max-sm:px-2 max-sm:text-sm starting:scale-x-0"
             ref={inputField}
           />
           <select
             name="priority"
             id=""
-            className="origin-right cursor-pointer outline-0 duration-500 starting:scale-x-0"
+            className="origin-right cursor-pointer outline-0 duration-500 max-sm:text-sm starting:scale-x-0"
             value={selectedPriority}
             onChange={handlePriority}
           >
@@ -153,7 +153,7 @@ function AddTask({ onAddTask }) {
       )}
       <button
         onClick={handleTask}
-        className="ml-auto cursor-pointer rounded-md bg-slate-800 px-4 py-2 font-medium text-white shadow duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-95 max-sm:mx-auto"
+        className="ml-auto cursor-pointer rounded-md bg-slate-800 px-4 py-2 font-medium text-white shadow duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-95 max-sm:mx-auto max-sm:text-sm"
       >
         ADD TASK
       </button>
