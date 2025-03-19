@@ -1,12 +1,6 @@
 import { useRef, useState } from "react";
-import "./index.css";
 import { useLocalStorage } from "./useLocalStorage";
-
-const arr = [
-  { taskName: "Buy groceries", completed: false, id: 101888, priority: 1 },
-  { taskName: "Walk the dog", completed: true, id: 102888, priority: 3 },
-  { taskName: "Read a book", completed: false, id: 103888, priority: 2 },
-];
+import "./index.css";
 
 function App() {
   const [tasks, setTasks] = useLocalStorage("tasks");
@@ -20,7 +14,7 @@ function App() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-300">
+    <div className="flex min-h-screen items-center justify-center max-sm:min-h-auto">
       <MainContainer>
         <Header />
         <ListContainer>
@@ -34,7 +28,7 @@ function App() {
 
 function MainContainer({ children }) {
   return (
-    <div className="flex h-[42rem] max-h-screen w-2xl flex-col items-center bg-slate-500 shadow-sm max-sm:h-[95vh] max-sm:w-[95vw]">
+    <div className="flex h-[42rem] max-h-screen max-sm:h-[100dvh] w-2xl flex-col items-center bg-slate-500 shadow-sm">
       {children}
     </div>
   );
@@ -87,7 +81,7 @@ function TodoItem({ taskName, id, priority, index, arr, onDeleteTask }) {
         zIndex: arr.length - index,
       }}
     >
-      <div className="max-sm:hover:text-[1rem] flex w-full origin-top items-center justify-between px-2 py-4 duration-200 ease-linear hover:text-lg max-sm:py-px max-sm:text-sm">
+      <div className="flex w-full origin-top items-center justify-between px-2 py-4 duration-200 ease-linear hover:text-lg max-sm:py-px max-sm:text-sm max-sm:hover:text-[1rem]">
         <p className="font-medium">
           {priority === 1 && "🔴"}
           {priority === 2 && "🟡"}
@@ -127,7 +121,7 @@ function AddTask({ onAddTask }) {
   }
 
   return (
-    <div className="mt-auto flex min-h-20 w-full items-center justify-center gap-4 bg-slate-200 px-4 py-2 max-sm:min-h-12 max-sm:flex-col max-sm:gap-2">
+    <div className="mt-auto flex min-h-20 w-full items-center justify-center gap-4 bg-slate-200 px-4 py-2 max-sm:min-h-12 max-sm:flex-col max-sm:gap-2 max-sm:px-px">
       {isSearching ? (
         <div className="flex flex-1">
           <input
