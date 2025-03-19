@@ -29,7 +29,7 @@ function App() {
 
 function MainContainer({ children }) {
   return (
-    <div className="flex h-[42rem] max-h-screen w-2xl flex-col items-center bg-stone-800 shadow-2xl max-sm:h-[100dvh]">
+    <div className="flex h-[42rem] max-h-screen w-2xl flex-col items-center gap-4 max-sm:h-[100dvh]">
       {children}
     </div>
   );
@@ -37,7 +37,7 @@ function MainContainer({ children }) {
 
 function Header() {
   return (
-    <h1 className="text-md font-century w-full bg-rose-950 py-4 text-center font-bold text-white">
+    <h1 className="text-md drop-shadow-custom font-century w-full bg-rose-950 py-4 text-center font-bold text-white">
       ToDo List Vite/Tailwind 📝
     </h1>
   );
@@ -45,7 +45,7 @@ function Header() {
 
 function ListContainer({ children }) {
   return (
-    <div className="flex w-full flex-1 flex-col gap-2 overflow-y-auto p-4">
+    <div className="drop-shadow-custom flex w-[95%] flex-1 flex-col gap-2 overflow-y-auto bg-stone-800 p-4">
       {children}
     </div>
   );
@@ -67,7 +67,7 @@ function List({ todoItems, onDeleteTask }) {
   ) : (
     <div className="h-full flex-1 content-center">
       <p className="text-bold text-center text-2xl text-white">
-        No items in your list yet 😁
+        No items in your list yet 😎
       </p>
     </div>
   );
