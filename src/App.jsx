@@ -137,7 +137,7 @@ function AddTask({ onAddTask }) {
   return (
     <div className="shadow-up z-1 mt-auto flex min-h-20 w-full items-center justify-center gap-4 bg-white px-4 py-2 max-sm:min-h-12 max-sm:flex-col max-sm:gap-2 max-sm:px-px max-sm:py-4">
       {isSearching ? (
-        <div className="flex w-[95%] flex-1">
+        <div className="flex w-[100%] flex-1 px-2">
           <input
             type="text"
             placeholder="Add new task..."
@@ -147,7 +147,7 @@ function AddTask({ onAddTask }) {
           <select
             name="priority"
             id=""
-            className="origin-right cursor-pointer outline-0 duration-500 max-sm:text-sm starting:scale-x-0"
+            className="origin-right cursor-pointer outline-0 duration-500 max-sm:text-xs starting:scale-x-0"
             value={selectedPriority}
             onChange={handlePriority}
           >
