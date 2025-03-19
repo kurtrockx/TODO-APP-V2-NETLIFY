@@ -34,7 +34,7 @@ function App() {
 
 function MainContainer({ children }) {
   return (
-    <div className="flex h-[42rem] max-h-screen w-2xl flex-col items-center bg-slate-500 shadow-sm max-sm:h-screen max-sm:w-screen">
+    <div className="flex h-[42rem] max-h-screen w-2xl flex-col items-center bg-slate-500 shadow-sm max-sm:h-[95vh] max-sm:w-[95vw]">
       {children}
     </div>
   );
@@ -87,7 +87,7 @@ function TodoItem({ taskName, id, priority, index, arr, onDeleteTask }) {
         zIndex: arr.length - index,
       }}
     >
-      <div className="flex w-full origin-top items-center justify-between px-2 py-4 duration-200 ease-linear hover:text-lg">
+      <div className="flex w-full origin-top items-center justify-between px-2 py-4 max-sm:py-px max-sm:text-sm duration-200 ease-linear hover:text-lg max-sm:hover:text-md">
         <p className="font-medium">
           {priority === 1 && "🔴"}
           {priority === 2 && "🟡"}
@@ -127,9 +127,9 @@ function AddTask({ onAddTask }) {
   }
 
   return (
-    <div className="mt-auto flex min-h-20 w-full items-center justify-between gap-4 bg-slate-200 px-4">
+    <div className="mt-auto flex min-h-20 w-full items-center justify-center gap-4 bg-slate-200 px-4 py-2 max-sm:flex-col max-sm:gap-2">
       {isSearching ? (
-        <>
+        <div className="flex flex-1">
           <input
             type="text"
             placeholder="Add new task..."
@@ -147,13 +147,13 @@ function AddTask({ onAddTask }) {
             <option value="2">🟡 Medium Priority</option>
             <option value="3">🟢 Low Priority</option>
           </select>
-        </>
+        </div>
       ) : (
         ""
       )}
       <button
         onClick={handleTask}
-        className="ml-auto cursor-pointer rounded-md bg-slate-800 px-4 py-2 font-medium text-white shadow duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-95"
+        className="ml-auto cursor-pointer rounded-md bg-slate-800 px-4 py-2 font-medium text-white shadow duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-95 max-sm:mx-auto"
       >
         ADD TASK
       </button>
