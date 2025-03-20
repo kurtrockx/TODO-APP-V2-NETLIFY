@@ -66,7 +66,7 @@ function List({ todoItems, onDeleteTask }) {
     ))
   ) : (
     <div className="h-full flex-1 content-center">
-      <p className="text-bold text-center text-2xl text-white">
+      <p className="text-bold text-center text-2xl text-white max-sm:text-base">
         No items in your list yet 😎
       </p>
     </div>
@@ -114,15 +114,14 @@ function AddTask({ onAddTask }) {
     inputField.current.value = "";
   });
 
-  function handleTask() {
+  function handleIsSearching() {
     setIsSearching((s) => !s);
-    if (!isSearching) return;
-    if (inputField.current.value.trim() === "") return;
-
     handleAddTask();
   }
 
   function handleAddTask() {
+    if (!isSearching) return;
+    if (inputField.current.value.trim() === "") return;
     const taskName = inputField.current.value;
     const priority = +selectedPriority;
     const id = Math.trunc(Math.random() * 900000) + 100000;
@@ -160,7 +159,7 @@ function AddTask({ onAddTask }) {
         ""
       )}
       <button
-        onClick={handleTask}
+        onClick={handleIsSearching}
         className="ml-auto cursor-pointer rounded-md bg-slate-800 px-4 py-2 font-medium text-white shadow duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-95 max-sm:mx-auto max-sm:text-sm"
       >
         ADD TASK
